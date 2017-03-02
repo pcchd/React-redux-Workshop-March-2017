@@ -20,7 +20,7 @@ module.exports = {
     {
       loader: ExtractTextPlugin.extract({
         fallbackLoader: 'style',
-        loader: 'css?minimize&-mergeRules&modules&importLoaders=1&localIdentName=[name]___[local]___[hash:base64:5]!resolve-url!sass',
+        loader: 'css?minimize&-mergeRules&importLoaders=1!resolve-url!sass',
         publicPath: './'
       }),
       test: /\.scss$/

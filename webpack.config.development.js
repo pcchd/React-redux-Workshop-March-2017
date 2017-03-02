@@ -40,7 +40,7 @@ module.exports = {
       {
         loaders: [
           'style-loader?sourceMap',
-          'css-loader?modules&importLoaders=1&localIdentName=[name]___[local]___[hash:base64:5]',
+          'css-loader?importLoaders=1',
           'resolve-url-loader',
           'sass-loader'
         ],
