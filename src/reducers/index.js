@@ -51,6 +51,7 @@ export default (state, action) => {
     };
 
     return Object.assign({}, state, {
+      activeProjectId: project.id,
       projects: [project].concat(state.projects)
     });
 
