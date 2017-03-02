@@ -16,7 +16,13 @@ const handleSelectProject = (project, dispatch) => {
 const ProjectsBar = function ProjectsBar ({dispatch, projects, activeProjectId}) {
   return (
     <div className='sidebar__container'>
-      <h2 className='sidebar__heading'>Projects <i className='sidebar__add-project' /></h2>
+      <h2 className='sidebar__heading'>
+        Projects
+        <i
+          className='sidebar__add-project'
+          onClick={() => dispatch({type: 'SHOW_NEW_PROJECT_MODAL'})}
+        />
+      </h2>
 
       <ul className='sidebar__projects-list'>
         {

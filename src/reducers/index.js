@@ -4,6 +4,7 @@ const initialState = {
   projects: [{id: 1, rate: 25, title: 'Applaudience.com'},
     {id: 2, rate: 25, title: 'Showtimes App'},
     {id: 3, rate: 0, title: 'React/Redux Workshop'}],
+  showNewProjectModal: false,
   tasks: [
     {id: 1, title: 'Create a web app', projectId: 2, timeTracked: 0, createdAt: new Date()},
     {id: 2, title: 'Create a movie app', projectId: 2, timeTracked: 0, createdAt: new Date()},
@@ -30,6 +31,7 @@ export default (state, action) => {
     return Object.assign({}, state, {
       activeProjectId: action.payload
     });
+
   case 'CREATE_NEW_TASK':
     const task = {
       createdAt: new Date(),
@@ -40,6 +42,26 @@ export default (state, action) => {
 
     return Object.assign({}, state, {
       tasks: [task].concat(state.tasks)
+    });
+
+  case 'CREATE_NEW_PROJECT':
+    const project = {
+      id: findMaxId(state.projects) + 1,
+      title: action.payload
+    };
+
+    return Object.assign({}, state, {
+      projects: [project].concat(state.projects)
+    });
+
+  case 'SHOW_NEW_PROJECT_MODAL':
+    return Object.assign({}, state, {
+      showNewProjectModal: true
+    });
+
+  case 'HIDE_NEW_PROJECT_MODAL':
+    return Object.assign({}, state, {
+      showNewProjectModal: false
     });
   }
 
