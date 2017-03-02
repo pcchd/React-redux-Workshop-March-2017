@@ -4,7 +4,16 @@ import React, {
 // eslint-disable-next-line import/no-unassigned-import, lines-around-comment
 import './styles.scss';
 
-const ProjectsBar = function ProjectsBar ({projects, activeProjectId}) {
+const handleSelectProject = (project, dispatch) => {
+  return () => {
+    dispatch({
+      payload: project.id,
+      type: 'SELECT_PROJECT'
+    });
+  };
+};
+
+const ProjectsBar = function ProjectsBar ({dispatch, projects, activeProjectId}) {
   return (
     <div className='sidebar__container'>
       <h2 className='sidebar__heading'>Projects <i className='sidebar__add-project' /></h2>
@@ -16,6 +25,7 @@ const ProjectsBar = function ProjectsBar ({projects, activeProjectId}) {
               <li
                 className={'sidebar__project' + (project.id === activeProjectId ? ' sidebar__project--active' : '')}
                 key={project.id}
+                onClick={handleSelectProject(project, dispatch)}
               >{project.title}</li>
             );
           })
@@ -27,6 +37,7 @@ const ProjectsBar = function ProjectsBar ({projects, activeProjectId}) {
 
 ProjectsBar.propTypes = {
   activeProjectId: PropTypes.number.isRequired,
+  dispatch: PropTypes.func.isRequired,
   projects: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number,
     rate: PropTypes.number,

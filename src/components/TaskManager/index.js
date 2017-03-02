@@ -4,12 +4,36 @@ import React, {
 // eslint-disable-next-line import/no-unassigned-import, lines-around-comment
 import './styles.scss';
 
-const TaskManager = function TaskManager ({activeTaskId, tasks}) {
+const TaskManager = function TaskManager ({activeTaskId, dispatch, tasks}) {
+  let input;
+
   return (
     <div className='taskmanager'>
       <div className='taskmanager__new-task'>
-        <input className='new-task__input' />
-        <i className='new-task__button' />
+        <input
+          className='new-task__input'
+          ref={
+            function (node) {
+              input = node;
+            }}
+        />
+        <i
+          className='new-task__button'
+          onClick={
+            function () {
+              const title = input.value.trim();
+
+              if (!title) {
+                return;
+              }
+
+              dispatch({
+                payload: title,
+                type: 'CREATE_NEW_TASK'
+              });
+
+              input.value = '';
+            }} />
       </div>
 
       <ul className='taskmanager__tasks-list'>
@@ -30,6 +54,7 @@ const TaskManager = function TaskManager ({activeTaskId, tasks}) {
 
 TaskManager.propTypes = {
   activeTaskId: PropTypes.number.isRequired,
+  dispatch: PropTypes.func.isRequired,
   tasks: PropTypes.arrayOf(PropTypes.shape({
     createdAt: PropTypes.instanceOf(Date),
     id: PropTypes.number,

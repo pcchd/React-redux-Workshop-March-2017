@@ -15,12 +15,14 @@ const App = function App (props) {
       <div className='sidebar'>
         <ProjectsBar
           activeProjectId={props.activeProjectId}
+          dispatch={props.dispatch}
           projects={props.projects}
         />
       </div>
       <div className='content'>
         <TaskManager
           activeTaskId={props.activeTaskId}
+          dispatch={props.dispatch}
           tasks={props.tasks}
         />
       </div>
@@ -31,6 +33,7 @@ const App = function App (props) {
 App.propTypes = {
   activeProjectId: PropTypes.number.isRequired,
   activeTaskId: PropTypes.number.isRequired,
+  dispatch: PropTypes.func.isRequired,
   projects: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number,
     rate: PropTypes.number,
@@ -45,26 +48,19 @@ App.propTypes = {
   })).isRequired
 };
 
-const selector = () => {
-  const projects = [
-    {id: 1, title: 'Applaudience.com', rate: 25},
-    {id: 2, title: 'Showtimes App', rate: 25},
-    {id: 3, title: 'React/Redux Workshop', rate: 0}
-  ];
-  const activeProjectId = 2;
-
-  const tasks= [
-   {id: 1, title: 'Create a web app', projectId: 2, timeTracked: 0, createdAt: new Date()},
-   {id: 2, title: 'Create a movie app', projectId: 2, timeTracked: 0, createdAt: new Date()},
-   {id: 3, title: 'Create a mobile app', projectId: 2, timeTracked: 0, createdAt: new Date()},
-   {id: 4, title: 'Create a TV app', projectId: 2, timeTracked: 0, createdAt: new Date()}
-  ];
-  const activeTaskId = 2;
+const selector = (state) => {
+  const tasks = state.tasks
+    .filter((task) => {
+      return task.projectId === state.activeProjectId;
+    })
+    .sort((task1, task2) => {
+      return task1.createdAt < task2.createdAt;
+    });
 
   return {
-    activeProjectId,
-    activeTaskId,
-    projects,
+    activeProjectId: state.activeProjectId,
+    activeTaskId: state.activeTaskId,
+    projects: state.projects,
     tasks
   };
 };
