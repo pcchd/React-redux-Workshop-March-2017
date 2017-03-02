@@ -32,3 +32,52 @@ This repository contains code for the app built in/for React/Redux workshop of P
   #+END_SRC
 
   If you can now open http://localhost:3000/ and see "Hello World" page, then you are good to go!
+
+** App: Game of Work
+
+It is not a game. It is more of a time-tracker which help you keep a finger on how much money you made today, and
+how much you lost (because you procrastinated).
+
+It is a single page application with a single view.
+
+*** Main View
+
+Main view constitutes a sidebar on left-most area, which shows a list of *projects*. Each project is clickable, and is highlighted
+when clicked on. Each project has a fixed rate specified to it when the project is created.
+
+To the right of projects-sidebar is tasks view. Selecting a project shows the tasks for the selected project.
+Each task can be edited in place, and marked =Done= by toggle a button next to the task. New tasks can be added
+using a text input present at top of the list.
+
+Selecting a task by clicking on it shows a =clock= on top of the tasks list. Clock has a single button to start
+or stop tracking a task, and a timer which shows how much time has been spent on the task.
+
+For every hour tracked, a notification is shown to the user informing them about how much money they made in
+last hour, and how much for the rest of the day.
+
+*** Main Elements of App
+**** Project
+#+BEGIN_SRC js
+{
+  id: number
+  title: string
+  rate: number
+}
+#+END_SRC
+**** Task
+#+BEGIN_SRC js
+{
+  id: number
+  title: string
+  projectId: number
+  createdAt: Date
+  timeTracked: number
+}
+#+END_SRC
+**** Clock
+#+BEGIN_SRC js
+{
+  taskId: number
+  startedAt: Date
+}
+#+END_SRC
