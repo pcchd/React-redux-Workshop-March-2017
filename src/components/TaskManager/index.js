@@ -12,20 +12,45 @@ const updateActiveTask = (id) => {
 };
 
 const TaskManager = function TaskManager ({activeTaskId, dispatch, tasks}) {
+  let taskInput;
+  const handleCreateTask = (event) => {
+    event.preventDefault();
+    const title = taskInput.value.trim();
+
+    if (!title) {
+      return;
+    }
+
+    dispatch({
+      payload: title,
+      type: 'CREATE_TASK'
+    });
+
+    taskInput.value = '';
+  };
+
   return (
     <div className='taskmanager'>
-      <div className='taskmanager__new-task'>
-        <input className='new-task__input' />
-        <i className='new-task__button' />
-      </div>
+      <form className='taskmanager__new-task' onSubmit={handleCreateTask}>
+        <input
+          className='new-task__input'
+          ref={function (node) {
+            taskInput = node;
+          }}
+        />
+        <button
+          className='new-task__button'
+          type='submit'
+        />
+      </form>
 
       <ul className='taskmanager__tasks-list'>
         {
           tasks.map((task) => {
             return (
               <li
-                className={'taskmanager__task' + (task.id === activeTaskId ?
-                                                  ' taskmanager__task--active' : '')}
+                className={'taskmanager__task' +
+                      (task.id === activeTaskId ? ' taskmanager__task--active' : '')}
                 key={task.id}
                 onClick={
                   function () {

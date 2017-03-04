@@ -29,16 +29,40 @@ const initialState = {
   }]
 };
 
+const findMaxId = (list) => {
+  let max = 0;
+
+  list.forEach((item) => {
+    if (item.id > max) {
+      max = item.id;
+    }
+  });
+
+  return max;
+};
+
 export default (state, action) => {
-  if (action.type === 'UPDATE_ACTIVE_PROJECT') {
+  switch (action.type) {
+  case 'UPDATE_ACTIVE_PROJECT':
     return Object.assign({}, state, {
       activeProjectId: action.payload
     });
-  }
 
-  if (action.type === 'UPDATE_ACTIVE_TASK') {
+  case 'UPDATE_ACTIVE_TASK':
     return Object.assign({}, state, {
       activeTaskId: action.payload
+    });
+
+  case 'CREATE_TASK':
+    const task = {
+      createdAt: new Date(),
+      id: findMaxId(state.tasks) + 1,
+      projectId: state.activeProjectId,
+      title: action.payload
+    };
+
+    return Object.assign({}, state, {
+      tasks: [task].concat(state.tasks)
     });
   }
 
