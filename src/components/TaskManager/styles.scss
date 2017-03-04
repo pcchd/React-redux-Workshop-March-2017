@@ -1,0 +1,69 @@
+.taskmanager {
+  width: 80%;
+  max-width: 800px;
+  margin: 20px auto;
+  border-radius: 5px;
+  border: 1px solid #eee;
+  min-height: 400px;
+}
+
+.taskmanager__new-task {
+  padding: 10px;
+  background: #eee;
+}
+
+.new-task__input {
+  width: calc(100% - 30px;);
+  font-size: 18px;
+  padding: 8px;
+  border: 1px solid #bbb;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.new-task__button {
+  border: 1px solid #bbb;
+  border-left: none;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  height: 37px;
+  width: 29px;
+  display: inline-block;
+  float: right;
+  background: url('./../../styles/icons/add.svg') no-repeat;
+  background-size: 50%;
+  background-position: 6px 10px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #ddd;
+  }
+
+  &:active {
+    background-color: #ccc;
+  }
+}
+
+.taskmanager__tasks-list {
+  list-style-type: none;
+}
+
+.taskmanager__task {
+  font-size: 14px;
+  padding: 10px;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba(#eee, 0.4);
+  }
+
+  &:active {
+    background-color: rgba(#eee, 0.6);
+  }
+}
+
+.taskmanager__task--active {
+  background-color: rgba(#eee, 0.6);
+}
