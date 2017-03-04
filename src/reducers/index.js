@@ -1,33 +1,9 @@
+/* eslint-disable no-case-declarations */
+
 const initialState = {
-  activeProjectId: 2,
-  activeTaskId: 1,
-  projects: [{
-    id: 1,
-    title: 'Workcave'
-  }, {
-    id: 2,
-    title: 'PCCHD'
-  }, {
-    id: 3,
-    title: 'Applaudience'
-  }],
+  projects: [],
   showNewProjectModal: false,
-  tasks: [{
-    createdAt: new Date(),
-    id: 1,
-    projectId: 2,
-    title: 'Create web app'
-  }, {
-    createdAt: new Date(),
-    id: 2,
-    projectId: 2,
-    title: 'Create IOS app'
-  }, {
-    createdAt: new Date(),
-    id: 3,
-    projectId: 1,
-    title: 'Create TV app'
-  }]
+  tasks: []
 };
 
 const findMaxId = (list) => {
@@ -41,7 +17,6 @@ const findMaxId = (list) => {
 
   return max;
 };
-
 
 export default (state, action) => {
   const nextState = (update) => {
@@ -60,6 +35,10 @@ export default (state, action) => {
     });
 
   case 'CREATE_TASK':
+    if (!state.activeProjectId) {
+      return state;
+    }
+
     const task = {
       createdAt: new Date(),
       id: findMaxId(state.tasks) + 1,
@@ -68,6 +47,7 @@ export default (state, action) => {
     };
 
     return nextState({
+      activeTaskId: task.id,
       tasks: [task].concat(state.tasks)
     });
 
@@ -78,6 +58,7 @@ export default (state, action) => {
     };
 
     return nextState({
+      activeProjectId: project.id,
       projects: [project].concat(state.projects)
     });
 
@@ -91,7 +72,6 @@ export default (state, action) => {
       showNewProjectModal: false
     });
   }
-
 
   return state || initialState;
 };
