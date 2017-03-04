@@ -15,6 +15,7 @@ class App extends Component {
   static propTypes = {
     activeProjectId: PropTypes.number.isRequired,
     activeTaskId: PropTypes.number.isRequired,
+    dispatch: PropTypes.func.isRequired,
     projects: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.number,
       title: PropTypes.string
@@ -34,6 +35,7 @@ class App extends Component {
         <div className='sidebar'>
           <ProjectsBar
             activeProjectId={this.props.activeProjectId}
+            dispatch={this.props.dispatch}
             projects={this.props.projects}
           />
         </div>
@@ -41,6 +43,7 @@ class App extends Component {
         <div className='content'>
           <TaskManager
             activeTaskId={this.props.activeTaskId}
+            dispatch={this.props.dispatch}
             tasks={this.props.tasks}
           />
         </div>
@@ -50,39 +53,14 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const projects = [{
-    id: 1,
-    title: 'Workcave'
-  }, {
-    id: 2,
-    title: 'PCCHD'
-  }, {
-    id: 3,
-    title: 'Applaudience'
-  }];
-  const tasks = [{
-    createdAt: new Date(),
-    id: 1,
-    projectId: 2,
-    title: 'Create web app'
-  }, {
-    createdAt: new Date(),
-    id: 2,
-    projectId: 2,
-    title: 'Create IOS app'
-  }, {
-    createdAt: new Date(),
-    id: 3,
-    projectId: 2,
-    title: 'Create TV app'
-  }];
-  const activeProjectId = 2;
-  const activeTaskId = 2;
+  const tasks = state.tasks.filter((task) => {
+    return task.projectId === state.activeProjectId;
+  });
 
   return {
-    activeProjectId,
-    activeTaskId,
-    projects,
+    activeProjectId: state.activeProjectId,
+    activeTaskId: state.activeTaskId,
+    projects: state.projects,
     tasks
   };
 };
