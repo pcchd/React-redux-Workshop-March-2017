@@ -11,6 +11,7 @@ const initialState = {
     id: 3,
     title: 'Applaudience'
   }],
+  showNewProjectModal: false,
   tasks: [{
     createdAt: new Date(),
     id: 1,
@@ -41,15 +42,20 @@ const findMaxId = (list) => {
   return max;
 };
 
+
 export default (state, action) => {
+  const nextState = (update) => {
+    return Object.assign({}, state, update);
+  };
+
   switch (action.type) {
   case 'UPDATE_ACTIVE_PROJECT':
-    return Object.assign({}, state, {
+    return nextState({
       activeProjectId: action.payload
     });
 
   case 'UPDATE_ACTIVE_TASK':
-    return Object.assign({}, state, {
+    return nextState({
       activeTaskId: action.payload
     });
 
@@ -61,10 +67,31 @@ export default (state, action) => {
       title: action.payload
     };
 
-    return Object.assign({}, state, {
+    return nextState({
       tasks: [task].concat(state.tasks)
     });
+
+  case 'CREATE_NEW_PROJECT':
+    const project = {
+      id: findMaxId(state.projects) + 1,
+      title: action.payload
+    };
+
+    return nextState({
+      projects: [project].concat(state.projects)
+    });
+
+  case 'SHOW_NEW_PROJECT_MODAL':
+    return nextState({
+      showNewProjectModal: true
+    });
+
+  case 'HIDE_NEW_PROJECT_MODAL':
+    return nextState({
+      showNewProjectModal: false
+    });
   }
+
 
   return state || initialState;
 };

@@ -7,6 +7,7 @@ import {
 } from 'react-redux';
 import ProjectsBar from './../../components/ProjectsBar';
 import TaskManager from './../../components/TaskManager';
+import NewProjectModal from './../../components/NewProjectModal';
 // eslint-disable-next-line import/no-unassigned-import, lines-around-comment
 import './styles.scss';
 
@@ -20,6 +21,7 @@ class App extends Component {
       id: PropTypes.number,
       title: PropTypes.string
     })).isRequired,
+    showNewProjectModal: PropTypes.bool.isRequired,
     tasks: PropTypes.arrayOf(PropTypes.shape({
       createdAt: PropTypes.instanceOf(Date),
       id: PropTypes.number,
@@ -32,6 +34,11 @@ class App extends Component {
   render () {
     return (
       <div className='container'>
+        <NewProjectModal
+          dispatch={this.props.dispatch}
+          showModal={this.props.showNewProjectModal}
+        />
+
         <div className='sidebar'>
           <ProjectsBar
             activeProjectId={this.props.activeProjectId}
@@ -61,6 +68,7 @@ const mapStateToProps = (state) => {
     activeProjectId: state.activeProjectId,
     activeTaskId: state.activeTaskId,
     projects: state.projects,
+    showNewProjectModal: state.showNewProjectModal,
     tasks
   };
 };
