@@ -11,8 +11,8 @@ This repository contains code for the app built in/for React/Redux workshop of P
 - *Clone this repository*
 
   #+BEGIN_SRC sh
-  git clone git@github.com:pcchd/React.js-next.js-Workshop-March-2017.git
-  cd ./React.js-next.js-Workshop-March-2017
+  git clone git@github.com:pcchd/React-redux-Workshop-March-2017.git
+  cd ./React-redux-Workshop-March-2017
   #+END_SRC
 
 - *Install dependencies*
